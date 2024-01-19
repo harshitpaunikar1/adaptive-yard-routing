@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptive Yard Routing: A Control-Room Narrative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rubik:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* 
+      DESIGN SYSTEM: "Operations Console"
+      Black and white only. Typography-driven.
+      Broad horizontal canvas, inset route callouts, console-label headings.
+    */
+    :root {
+      --bg: #0a0a0a;
+      --text-main: #f5f5f5;
+      --text-muted: #aaaaaa;
+      --border-heavy: #f5f5f5;
+      --border-light: #333333;
+      --f-prose: 'Rubik', sans-serif;
+      --f-console: 'Space Mono', monospace;
+      --code-bg: #111111;
+      --code-text: #f5f5f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--f-prose);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 5rem;
+    }
+
+    /* Broad Horizontal Canvas */
+    .dashboard-shell {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 4rem;
+      border-bottom: 2px solid var(--border-heavy);
+      padding-bottom: 2rem;
+    }
+
+    .status-ribbon {
+      font-family: var(--f-console);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-light);
+      padding: 0.5rem 1rem;
+    }
+
+    h1 {
+      font-family: var(--f-console);
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .lede {
+      font-size: 1.35rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 900px;
+    }
+
+    /* Console-style H2s */
+    h2 {
+      font-family: var(--f-console);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-top: 5rem;
+      margin-bottom: 2rem;
+      padding: 0.5rem 1rem;
+      background-color: var(--border-heavy);
+      color: var(--bg);
+      display: inline-block;
+    }
+
+    /* Body Text Layout */
+    .prose-container {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      grid-gap: 4rem;
+      align-items: start;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Inset Route Callouts */
+    .route-callout {
+      position: sticky;
+      top: 2rem;
+      border: 1px solid var(--border-light);
+      padding: 1.5rem;
+      font-family: var(--f-console);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .route-callout .event-log {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--border-light);
+    }
+    
+    .route-callout .event-log:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .event-time {
+      color: var(--text-main);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Diagrams */
+    .diagram-panel {
+      margin: 4rem 0;
+      border: 1px solid var(--border-light);
+      padding: 2rem;
+      background-color: #000;
+    }
+
+    .diagram-title {
+      font-family: var(--f-console);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 0.5rem;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .diagram-caption {
+      font-family: var(--f-prose);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 1.5rem;
+      border-left: 2px solid var(--border-heavy);
+      padding-left: 1rem;
+    }
+
+    /* Code Snippets */
+    pre {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border-light);
+      color: var(--code-text);
+      font-family: var(--f-console);
+      font-size: 0.85rem;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: var(--f-console);
+    }
+
+    .c-comment { color: #555555; }
+    .c-keyword { color: #ffffff; font-weight: bold; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-family: var(--f-console);
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 400;
+      border-bottom: 1px solid var(--border-heavy);
+    }
+
+    @media (max-width: 1024px) {
+      .prose-container {
+        grid-template-columns: 1fr;
+      }
+      .route-callout {
+        position: relative;
+        top: 0;
+        margin-top: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard-shell">
+
+  <header>
+    <div class="status-ribbon">
+      <span>SYS_STATE: ONLINE</span>
+      <span>YARD: CONGESTED</span>
+      <span>LATENCY: 42ms</span>
+      <span>OP_MODE: AUTO_ROUTING</span>
+    </div>
+    <h1>Adaptive Yard Routing</h1>
+    <p class="lede">Yard management software is rarely useful when it stays at the altitude of “optimize operations.” To understand adaptive routing, we must descend from the dashboard and experience the yard as a living, breathing state machine defined by queues, handoffs, and relentless contention under time pressure.</p>
+  </header>
+
+  <div class="prose-container">
+    
+    <div class="main-text">
+      <p>The failure of most logistics automation begins at the gate. At 14:00 on a Tuesday, an inbound carrier arrives. The driver rolls down the window and hands the guard a bill of lading. Behind him, three more trucks sit idling, bleeding air-brakes on the access road. Inside the facility, the control room is staring at a clipboard, a radio, and a static spreadsheet that was obsolete the second it was printed.</p>
+
+      <p>The yard supervisor needs to assign a dock. But assigning a dock requires knowing which docks are empty, which docks are supposed to be empty but still have a lingering trailer, and which empty slots are reserved for an outbound load scheduled to depart in twenty minutes. If the supervisor guesses wrong, the inbound truck is routed to a full dock, where it blocks the fire lane. A jockey is then radioed to blindly search the yard for an empty drop lot. Suddenly, three disparate assets—a carrier, a jockey, and a dock—are deadlocked.</p>
+
+      <p>This is not an "optimization" problem. It is a state-management crisis. The yard is a massive, physical state machine where entities (trucks, trailers, jockeys, docks) change status in real time. Adaptive routing is the discipline of catching those state changes the split second they occur and automatically resolving the next routing instruction before a human has to pick up a radio.</p>
+
+      <h2>[STATE_01]: Gate-In and Entity Registration</h2>
+
+      <p>The moment the guard scans the inbound paperwork, the system does not merely log a timestamp. It instantiates a digital twin of the trailer. This entity carries properties: length, temperature constraints (reefer vs. dry van), cargo priority, and carrier identity. Before the physical gate arm rises, the decision engine evaluates the state of the yard against the inbound entity properties.</p>
+
+      <p>We are not relying on predictive AI here. We are relying on deterministic, highly constrained state transitions. The engine queries the dock matrix. It filters out docks that cannot accommodate a 53-foot reefer. It filters out docks assigned to conflicting carriers. It finds the nearest compatible, verifiably empty dock—or, if no dock is available, the nearest drop-lot slot. The driver receives a printed ticket with a barcode and a specific parking coordinate: <code>SLOT_B4</code>.</p>
+
+      <div class="diagram-panel">
+        <div class="diagram-title">SYS_GEO // Yard Atlas State Map</div>
+        <svg viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
+          <!-- Yard Boundary -->
+          <rect x="20" y="20" width="960" height="360" fill="none" stroke="#333" stroke-width="2" />
+          
+          <!-- Access Road & Gate -->
+          <path d="M 20 100 L 100 100 L 100 300 L 20 300" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="60" y="200" font-family="Space Mono" font-size="12" fill="#aaa" transform="rotate(-90 60 200)" text-anchor="middle">GATE_IN</text>
+          
+          <!-- Inbound Queue -->
+          <rect x="40" y="120" width="40" height="20" fill="#f5f5f5" />
+          <rect x="40" y="160" width="40" height="20" fill="#f5f5f5" />
+          <rect x="40" y="200" width="40" height="20" fill="#f5f5f5" />
+          <rect x="40" y="240" width="40" height="20" fill="#111" stroke="#f5f5f5" stroke-width="1"/>
+          
+          <!-- Dock building -->
+          <rect x="800" y="40" width="160" height="320" fill="#111" stroke="#333" stroke-width="2" />
+          <text x="880" y="200" font-family="Space Mono" font-size="14" fill="#aaa" transform="rotate(90 880 200)" text-anchor="middle">WAREHOUSE_DOCKS</text>
+
+          <!-- Docks (Right side) -->
+          <!-- Dock 1: Occupied -->
+          <rect x="750" y="60" width="50" height="20" fill="#555" />
+          <line x1="720" y1="70" x2="750" y2="70" stroke="#f5f5f5" stroke-width="2" />
+          
+          <!-- Dock 2: Empty -->
+          <rect x="750" y="100" width="50" height="20" fill="none" stroke="#555" stroke-width="1" />
+          <text x="730" y="115" font-family="Space Mono" font-size="10" fill="#f5f5f5">D02</text>
+          
+          <!-- Dock 3: Occupied by priority -->
+          <rect x="750" y="140" width="50" height="20" fill="#f5f5f5" />
+          <line x1="720" y1="150" x2="750" y2="150" stroke="#f5f5f5" stroke-width="2" />
+          
+          <!-- Dock 4: Docking in progress -->
+          <rect x="720" y="180" width="80" height="20" fill="#aaa" />
+          <text x="690" y="195" font-family="Space Mono" font-size="10" fill="#f5f5f5">MOV</text>
+
+          <!-- Drop Lots (Center) -->
+          <rect x="300" y="80" width="200" height="240" fill="none" stroke="#333" stroke-width="1" />
+          <text x="400" y="70" font-family="Space Mono" font-size="10" fill="#aaa" text-anchor="middle">ZONE B: STAGING</text>
+          
+          <!-- Slots in Drop Lot -->
+          <rect x="320" y="100" width="40" height="80" fill="#333" />
+          <rect x="380" y="100" width="40" height="80" fill="none" stroke="#555" stroke-width="1" stroke-dasharray="2 2" />
+          <text x="400" y="145" font-family="Space Mono" font-size="12" fill="#fff" text-anchor="middle">B4</text>
+          <rect x="440" y="100" width="40" height="80" fill="#333" />
+          
+          <!-- Active Routing Path -->
+          <path d="M 90 250 L 200 250 L 200 140 L 310 140" fill="none" stroke="#f5f5f5" stroke-width="2" stroke-dasharray="6 4" />
+          <polygon points="310,140 300,135 300,145" fill="#f5f5f5" />
+          <text x="200" y="270" font-family="Space Mono" font-size="10" fill="#aaa">ROUTING: TRK_8891 TO SLOT_B4</text>
+        </svg>
+        <div class="diagram-caption">
+          Top-down Yard Atlas. Instead of radio calls, the system maps the inbound carrier (TRK_8891) directly to a verifiably empty staging slot (B4). The routing path avoids the active movement occurring at Dock 4.
+        </div>
+      </div>
+
+      <h2>[STATE_02]: The Handoff and Request Generation</h2>
+
+      <p>The truck parks at <code>SLOT_B4</code>. The driver unhooks the trailer and exits the facility. Now, the trailer exists in a dormant state: <code>STAGED_DROPPED</code>. The yard software knows it is sitting in B4, but a warehouse manager inside the building needs that trailer's cargo at <code>DOCK_02</code> immediately.</p>
+
+      <p>Old logic required the warehouse manager to call the yard supervisor, who would then blast a request over the radio: <em>"Hey, who's free to grab a reefer from B4 and put it on door 2?"</em> This creates a race condition. Two jockeys might drive toward B4, wasting fuel and time, or no jockey responds because they assume someone else is handling it. The adaptive routing engine intercepts this request entirely.</p>
+
+      <p>When the warehouse manager clicks "Call to Dock" in their portal, the system triggers an asynchronous move request. The engine evaluates the live GPS positions of every jockey truck in the yard, checks their current task queue, and calculates the exact travel distance from their location to B4, then to Dock 02. It selects the optimal jockey and pushes a structured move task directly to their cabin tablet.</p>
+
+<pre><code><span class="c-comment"># Pseudo-logic for the jockey assignment state transition</span>
+<span class="c-keyword">def</span> assign_move_request(trailer_id, target_dock):
+    trailer = get_entity(trailer_id)
+    trailer.state = <span class="c-keyword">"REQUESTED"</span>
+    
+    <span class="c-comment"># Filter jockeys by availability and capabilities (e.g., reefer hookups)</span>
+    available_jockeys = get_jockeys(state=<span class="c-keyword">"IDLE"</span>)
+    
+    <span class="c-comment"># Optimize assigning the nearest asset</span>
+    best_jockey = min(
+        available_jockeys, 
+        key=<span class="c-keyword">lambda</span> j: calculate_distance(j.location, trailer.location)
+    )
+    
+    <span class="c-comment"># Dispatch the task to the selected terminal</span>
+    best_jockey.push_task({
+        <span class="c-keyword">"action"</span>: <span class="c-keyword">"MOVE"</span>,
+        <span class="c-keyword">"source"</span>: trailer.location,     <span class="c-comment"># "ZONE_B4"</span>
+        <span class="c-keyword">"destination"</span>: target_dock,     <span class="c-comment"># "DOCK_02"</span>
+        <span class="c-keyword">"entity"</span>: trailer.id
+    })
+    
+    <span class="c-keyword">return</span> best_jockey.id
+</code></pre>
+
+      <h2>[STATE_03]: Execution and Exception Handling</h2>
+
+      <p>The jockey accepts the task on their screen with a single tap. The system transitions the trailer to <code>IN_TRANSIT</code>. The control room's dashboard updates instantly. But yards are chaotic, and software that assumes a perfect golden path will fail in production. What happens when the jockey arrives at B4 and the trailer has a flat tire?</p>
+
+      <p>In a manual yard, the jockey radios in, the supervisor forgets to write it down, and three hours later the warehouse is screaming about missing cargo. In the adaptive routing system, the jockey taps an "Exception" button on their tablet, selects "Maintenance Issue," and attaches a quick photo. The system immediately rolls the trailer state to <code>MAINTENANCE_HOLD</code>, alerting the shop. Crucially, the engine instantly kicks the move request back into the pool, finding the next available priority trailer to supply <code>DOCK_02</code> without human intervention.</p>
+
+      <div class="diagram-panel">
+        <div class="diagram-title">SYS_FLOW // Dispatch Switchyard Logic</div>
+        <svg viewBox="0 0 1000 350" preserveAspectRatio="xMidYMid meet">
+          <!-- Flowchart Boxes -->
+          <rect x="50" y="150" width="120" height="50" fill="none" stroke="#f5f5f5" stroke-width="2" />
+          <text x="110" y="180" font-family="Space Mono" font-size="12" fill="#fff" text-anchor="middle">WMS_CALL</text>
+
+          <rect x="250" y="150" width="140" height="50" fill="#333" stroke="#555" stroke-width="2" />
+          <text x="320" y="180" font-family="Space Mono" font-size="12" fill="#fff" text-anchor="middle">ROUTING_ENGINE</text>
+
+          <rect x="470" y="50" width="140" height="50" fill="none" stroke="#aaa" stroke-width="1" />
+          <text x="540" y="80" font-family="Space Mono" font-size="12" fill="#aaa" text-anchor="middle">JOCKEY_1 (BUSY)</text>
+
+          <rect x="470" y="150" width="140" height="50" fill="#f5f5f5" stroke="#fff" />
+          <text x="540" y="180" font-family="Space Mono" font-size="12" fill="#111" font-weight="700" text-anchor="middle">JOCKEY_2 (IDLE)</text>
+
+          <rect x="470" y="250" width="140" height="50" fill="none" stroke="#aaa" stroke-width="1" />
+          <text x="540" y="280" font-family="Space Mono" font-size="12" fill="#aaa" text-anchor="middle">JOCKEY_3 (OPPOSITE YARD)</text>
+
+          <rect x="700" y="110" width="120" height="40" fill="none" stroke="#f5f5f5" stroke-dasharray="4 4"/>
+          <text x="760" y="135" font-family="Space Mono" font-size="10" fill="#fff" text-anchor="middle">ACCEPT</text>
+
+          <rect x="880" y="60" width="100" height="40" fill="#111" stroke="#f5f5f5" />
+          <text x="930" y="85" font-family="Space Mono" font-size="10" fill="#fff" text-anchor="middle">EXECUTE MOVE</text>
+
+          <rect x="700" y="190" width="120" height="40" fill="none" stroke="#555" stroke-dasharray="4 4"/>
+          <text x="760" y="215" font-family="Space Mono" font-size="10" fill="#aaa" text-anchor="middle">EXCEPTION</text>
+
+          <rect x="880" y="220" width="100" height="40" fill="#333" stroke="#555" />
+          <text x="930" y="245" font-family="Space Mono" font-size="10" fill="#aaa" text-anchor="middle">MAINT. QUEUE</text>
+
+          <!-- Flow Lines -->
+          <path d="M 170 175 L 250 175" stroke="#f5f5f5" stroke-width="2" fill="none" marker-end="url(#arrow-white)" />
+          <path d="M 390 175 L 430 175 L 430 75 L 470 75" stroke="#555" stroke-width="1" fill="none" />
+          <path d="M 390 175 L 470 175" stroke="#f5f5f5" stroke-width="3" fill="none" marker-end="url(#arrow-white)"/>
+          <path d="M 390 175 L 430 175 L 430 275 L 470 275" stroke="#555" stroke-width="1" fill="none" />
+
+          <!-- Resolution branches -->
+          <path d="M 610 175 L 660 175 L 660 130 L 700 130" stroke="#f5f5f5" stroke-width="2" fill="none" />
+          <path d="M 820 130 L 850 130 L 850 80 L 880 80" stroke="#f5f5f5" stroke-width="2" fill="none" />
+
+          <path d="M 610 175 L 660 175 L 660 210 L 700 210" stroke="#aaa" stroke-dasharray="2 2" stroke-width="2" fill="none" />
+          <path d="M 820 210 L 850 210 L 850 240 L 880 240" stroke="#aaa" stroke-dasharray="2 2" stroke-width="2" fill="none" />
+
+          <defs>
+            <marker id="arrow-white" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#f5f5f5" />
+            </marker>
+          </defs>
+        </svg>
+        <div class="diagram-caption">
+          Dispatch Switchyard Map. The engine receives a WMS request, scopes the jockey fleet, and routes to Jockey 2 via proximity algorithms. If an exception triggers at the source, the asset bypasses execution and drops straight into a designated maintenance queue, instantly freeing the jockey for reallocation.
+        </div>
+      </div>
+
+      <h2>[STATE_04]: What Changes for the Operator</h2>
+
+      <p>The control room stops being a center of frantic coordination. The yard supervisor transforms from a human router into an exception manager. Because the system autonomously matches nearest empty docks, continuously guides arriving trucks, and commands the jockey terminals, the supervisor spends zero time yelling into a radio about blind spots.</p>
+
+      <p>The metrics that matter—dwell time, move turnaround times, dock utilization—fall into line naturally. The automation strips away the latency between decisions. In logistics, time is crushed in the handoffs. By digitizing those handoffs and strictly enforcing state boundaries, the yard stops swallowing trailers whole. It becomes a predictable, observable engine.</p>
+    </div>
+
+    <aside class="route-callout">
+      <div class="event-log">
+        <span class="event-time">14:02:11</span>
+        TRK_8891 GATED_IN.
+      </div>
+      <div class="event-log">
+        <span class="event-time">14:02:14</span>
+        SYS CALC: DOCKS FULL.
+      </div>
+      <div class="event-log">
+        <span class="event-time">14:02:15</span>
+        TRK_8891 ROUTED TO SLOT_B4.
+      </div>
+      <div class="event-log">
+        <span class="event-time">14:15:00</span>
+        WMS REQUEST_MOVE (B4 -> D02).
+      </div>
+      <div class="event-log">
+        <span class="event-time">14:15:02</span>
+        JOCKEY_2 ASSIGNED. (ETA 2M)
+      </div>
+      <div class="event-log" style="color: #fff;">
+        <span class="event-time">14:17:45</span>
+        DOCK_02 SECURED. TASK CLOSED.
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+</body>
+</html>
