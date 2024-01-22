@@ -12,3 +12,7 @@
 
 - Task summary: Weekend fix — the visualizations had overlapping labels in narrow viewports. Adjusted the figure size and padding.
 - Deliverable: Should've caught it earlier but better now than later.
+## 2024-01-22 - Day 2: Workflow mapping pass
+
+- Task summary: Used the next day to keep the momentum going for Adaptive Yard Routing. I was still piecing things together, so I focused on trying to map the current manual workflow and list the failure points worth fixing first and wrote down the stuff that looked important. I was still mostly figuring out the shape of it, so a lot of the day went into small notes and half clear ideas. A lot of the work here was really about workflow thinking, not just screens or files.
+- Deliverable: I wrapped up the day with current-state workflow mostly in place. It was not perfect, but it was good enough to keep the project moving. There were still a couple of loose parts, but nothing serious enough to block the next step.
