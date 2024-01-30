@@ -40,3 +40,7 @@
 
 - Task summary: This was the middle stretch where the project started feeling real. I kept going and tried to implement the key interaction logic so the main scenario makes sense end to end, then cleaned up whatever looked confusing or weak from the earlier days. Once the base made some sense, I could finally move a bit faster and stop second guessing every tiny decision. A lot of the work here was realy about workflow thinking, not just screens or files.
 - Deliverable: Ended the day with working core flow in hand, plus a few side notes on what still needed fixing later. There were still a couple of loose parts, but nothing serious enough to block the next step.
+## 2024-01-30 - Day 8: Core interaction
+
+- Task summary: Late-night fix: re-ran the plots with better axis labels and a more readable color palette.
+- Deliverable: Pushed before end of day.
