@@ -44,3 +44,7 @@
 
 - Task summary: Late-night fix: re-ran the plots with better axis labels and a more readable color palette.
 - Deliverable: Pushed before end of day.
+## 2024-01-31 - Day 9: Operational rules
+
+- Task summary: Closer to the end, I was mostly tightening things up instead of inventing new scope. The job for the day was to add validation, business rules, and edge cases from the workflow map so the final result looked a bit more complete. The middle part always takes longer than it should, mostly becuase one fix usually reveals two more things to clean up. I kept imagining how an actual operator would move through the steps so the project would not feel fake.
+- Deliverable: Ended the day with rules and constraints in hand, plus a few side notes on what still needed fixing later. It was not super polished, just stable enough that I felt okay moving forward.
