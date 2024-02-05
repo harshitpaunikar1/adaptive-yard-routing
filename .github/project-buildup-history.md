@@ -64,3 +64,7 @@
 
 - Task summary: Weekend code review of my own work. Mostly reading, but ended up fixing three things that were bothering me.
 - Deliverable: Nothing dramatic — just keeping things tidy.
+## 2024-02-05 - Day 12: Polish wrap
+
+- Task summary: Used the last day on Adaptive Yard Routing to slow down and finish the loose ends. I mainly had to refine naming, visuals, and explanations so the project feels coherent and make sure the project told a clean story from start to finish. Most of the heavy lifting was already done, so this part was more about making the rough edges less obvious. I kept imagining how an actual operator would move through the steps so the project would not feel fake.
+- Deliverable: Finished with polished project looking decent enough to call this version done, even if I could still nitpick a few things. It was not super polished, just stable enough that I felt okay moving forward.
