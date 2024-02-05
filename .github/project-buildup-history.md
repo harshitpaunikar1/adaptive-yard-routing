@@ -72,3 +72,7 @@
 
 - Task summary: One more pass: spent time just reading back through everything to make sure it still made sense end to end.
 - Deliverable: Solid now, moving on.
+## 2024-02-05 - Day 12: Polish wrap
+
+- Task summary: Spent another hour on this: there was a subtle off-by-one error in the index slicing that was silently skewing results. Caught it and fixed it.
+- Deliverable: Should've caught it earlier but better now than later.
