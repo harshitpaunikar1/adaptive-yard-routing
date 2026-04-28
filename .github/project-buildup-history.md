@@ -10,7 +10,7 @@
 - Deliverable: By the end of the day I had problem brief written down in a rough way, which was enough to stop guessing and move into the next step. I also left myself a few rough reminders for the next day so I would not have to rediscover the same context again.
 ## 2024-01-21 - Day 1: Problem discovery start
 
-- Task summary: Weekend fix — the visualizations had overlapping labels in narrow viewports. Adjusted the figure size and padding.
+- Task summary: Weekend fix - the visualizations had overlapping labels in narrow viewports. Adjusted the figure size and padding.
 - Deliverable: Should've caught it earlier but better now than later.
 ## 2024-01-22 - Day 2: Workflow mapping pass
 
@@ -63,7 +63,7 @@
 ## 2024-02-03 - Day 10: Artifacts
 
 - Task summary: Weekend code review of my own work. Mostly reading, but ended up fixing three things that were bothering me.
-- Deliverable: Nothing dramatic — just keeping things tidy.
+- Deliverable: Nothing dramatic - just keeping things tidy.
 ## 2024-02-05 - Day 12: Polish wrap
 
 - Task summary: Used the last day on Adaptive Yard Routing to slow down and finish the loose ends. I mainly had to refine naming, visuals, and explanations so the project feels coherent and make sure the project told a clean story from start to finish. Most of the heavy lifting was already done, so this part was more about making the rough edges less obvious. I kept imagining how an actual operator would move through the steps so the project would not feel fake.

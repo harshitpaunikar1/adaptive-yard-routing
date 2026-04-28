@@ -247,7 +247,7 @@
     <div class="main-text">
       <p>The failure of most logistics automation begins at the gate. At 14:00 on a Tuesday, an inbound carrier arrives. The driver rolls down the window and hands the guard a bill of lading. Behind him, three more trucks sit idling, bleeding air-brakes on the access road. Inside the facility, the control room is staring at a clipboard, a radio, and a static spreadsheet that was obsolete the second it was printed.</p>
 
-      <p>The yard supervisor needs to assign a dock. But assigning a dock requires knowing which docks are empty, which docks are supposed to be empty but still have a lingering trailer, and which empty slots are reserved for an outbound load scheduled to depart in twenty minutes. If the supervisor guesses wrong, the inbound truck is routed to a full dock, where it blocks the fire lane. A jockey is then radioed to blindly search the yard for an empty drop lot. Suddenly, three disparate assets—a carrier, a jockey, and a dock—are deadlocked.</p>
+      <p>The yard supervisor needs to assign a dock. But assigning a dock requires knowing which docks are empty, which docks are supposed to be empty but still have a lingering trailer, and which empty slots are reserved for an outbound load scheduled to depart in twenty minutes. If the supervisor guesses wrong, the inbound truck is routed to a full dock, where it blocks the fire lane. A jockey is then radioed to blindly search the yard for an empty drop lot. Suddenly, three disparate assets-a carrier, a jockey, and a dock-are deadlocked.</p>
 
       <p>This is not an "optimization" problem. It is a state-management crisis. The yard is a massive, physical state machine where entities (trucks, trailers, jockeys, docks) change status in real time. Adaptive routing is the discipline of catching those state changes the split second they occur and automatically resolving the next routing instruction before a human has to pick up a radio.</p>
 
@@ -255,7 +255,7 @@
 
       <p>The moment the guard scans the inbound paperwork, the system does not merely log a timestamp. It instantiates a digital twin of the trailer. This entity carries properties: length, temperature constraints (reefer vs. dry van), cargo priority, and carrier identity. Before the physical gate arm rises, the decision engine evaluates the state of the yard against the inbound entity properties.</p>
 
-      <p>We are not relying on predictive AI here. We are relying on deterministic, highly constrained state transitions. The engine queries the dock matrix. It filters out docks that cannot accommodate a 53-foot reefer. It filters out docks assigned to conflicting carriers. It finds the nearest compatible, verifiably empty dock—or, if no dock is available, the nearest drop-lot slot. The driver receives a printed ticket with a barcode and a specific parking coordinate: <code>SLOT_B4</code>.</p>
+      <p>We are not relying on predictive AI here. We are relying on deterministic, highly constrained state transitions. The engine queries the dock matrix. It filters out docks that cannot accommodate a 53-foot reefer. It filters out docks assigned to conflicting carriers. It finds the nearest compatible, verifiably empty dock-or, if no dock is available, the nearest drop-lot slot. The driver receives a printed ticket with a barcode and a specific parking coordinate: <code>SLOT_B4</code>.</p>
 
       <div class="diagram-panel">
         <div class="diagram-title">SYS_GEO // Yard Atlas State Map</div>
@@ -412,7 +412,7 @@
 
       <p>The control room stops being a center of frantic coordination. The yard supervisor transforms from a human router into an exception manager. Because the system autonomously matches nearest empty docks, continuously guides arriving trucks, and commands the jockey terminals, the supervisor spends zero time yelling into a radio about blind spots.</p>
 
-      <p>The metrics that matter—dwell time, move turnaround times, dock utilization—fall into line naturally. The automation strips away the latency between decisions. In logistics, time is crushed in the handoffs. By digitizing those handoffs and strictly enforcing state boundaries, the yard stops swallowing trailers whole. It becomes a predictable, observable engine.</p>
+      <p>The metrics that matter-dwell time, move turnaround times, dock utilization-fall into line naturally. The automation strips away the latency between decisions. In logistics, time is crushed in the handoffs. By digitizing those handoffs and strictly enforcing state boundaries, the yard stops swallowing trailers whole. It becomes a predictable, observable engine.</p>
     </div>
 
     <aside class="route-callout">
